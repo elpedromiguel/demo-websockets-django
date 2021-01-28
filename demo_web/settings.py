@@ -133,13 +133,14 @@ STATIC_URL = '/static/'
 
 
 #Channels Layers
-# REDIS_URL = env('REDIS_URL')
+REDIS_URL = env.str('REDIS_HOST')
+REDIS_PORT = env.int('REDIS_PORT')
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [("redis", 6379)],
+            'hosts': [(REDIS_URL, REDIS_PORT)],
         },
     },
 }
