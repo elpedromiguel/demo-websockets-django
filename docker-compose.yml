@@ -1,0 +1,37 @@
+version: '3'
+
+volumes:
+  local_postgres_data:
+  local_postgres_data_backups:
+  redisdata:
+
+services:
+
+  postgres:
+    image: postgres:12
+    env_file: .env
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+  django:
+    build:
+      context: .
+    image: demo_web_local_django
+    env_file: .env
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports: 
+      - "8000:8000"
+    depends_on: 
+      - postgres
+      - redis
