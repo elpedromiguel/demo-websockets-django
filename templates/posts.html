@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <h1>Posts</h1>
+    </body>
+    <script>
+        let socket = new WebSocket('ws://0.0.0.0:8000/posts/');
+        socket.onopen = function(e){
+            console.log('Connection Established')
+        };
+        socket.onmessage = function(e){
+            console.log(JSON.parse(e.data));
+        }
+        socket.onclose = function(e){
+            console.log('Connection closed');
+        }
+    </script>
+</html>
