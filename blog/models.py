@@ -26,7 +26,8 @@ def announce_new_post(sender, instance, created, **kwargs):
             'entries', {
                 'type' : 'blog.entries',
                 'event' : 'New Entry',
-                'title' : instance.title
+                'title' : instance.title,
+                'author' : instance.author.first_name
             }
         )
 
